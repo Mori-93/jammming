@@ -55,6 +55,21 @@ function App() {
   const [playlistTracks, setPlaylistTracks] = useState(mockPlaylist)
 
   //handlers
+  const addTrack = useCallback(
+    (track) => {
+        if(playlistTracks.some((savedTrack) => savedTrack.id === track.id)) {
+            return;
+        };
+        setPlaylistTracks((prevTracks) => [...prevTracks, track])
+    }, [playlistTracks]
+  );
+
+  const removeTrack = useCallback((track) => {
+        setPlaylistTracks((prevTracks) =>
+            prevTracks.filter((currentTrack) => currentTrack.id !== track.id)
+        );
+    }, []);
+
   const updatePlaylistName = useCallback((name) => {
     setPlaylistName(name);
   }, []);
@@ -65,18 +80,18 @@ function App() {
       <div className="App">
         <p>here goes the search bar</p>
         <div className='App-playlist'>
-          <SearchResults searchResults={searchResults} /*onAdd={addTrack}*//>
+          <SearchResults searchResults={searchResults} onAdd={addTrack} />
           <Playlist 
           playlistName={playlistName}
           playlistTracks={playlistTracks}
           onNameChange={updatePlaylistName}
-          /*onRemove={removeTrack}
-          onSave={savePlaylist}*/
+          onRemove={removeTrack}
+          /*onSave={savePlaylist}*/
           />
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default App;

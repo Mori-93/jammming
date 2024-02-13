@@ -8,11 +8,11 @@ import Spotify from "../../utilities/Spotify";
 
 function App() {
   return (
-    <div className="App">
-      <h1>Ja<span>MMM</span>ing</h1>
-      <div>
+    <div>
+      <h1>Ja<span className='highlight'>mmm</span>ing</h1>
+      <div className="App">
         <p>here goes the search bar</p>
-        <div>
+        <div className='App-playlist'>
           <p>here goes the search results</p>
           <p>here goes the play list</p>
         </div>

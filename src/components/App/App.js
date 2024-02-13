@@ -28,8 +28,36 @@ const mockSearchResults = [
     }
   ];
 
+const mockPlaylist = [
+    {
+        id: 4,
+        name: "Yūsha",
+        artist: "Yoasobi",
+        album: "THE BOOK",
+      },
+      {
+        id: 5,
+        name: "Tabun",
+        artist: "Yoasobi",
+        album: "THE BOOK",
+      },
+      {
+        id: 6,
+        name: "Ano Yume o Nazotte",
+        artist: "Yoasobi",
+        album: "THE BOOK",
+      }
+];
+
 function App() {
   const [searchResults, setSearchResults] = useState(mockSearchResults)
+  const [playlistName, setPlaylistName] = useState("New Playlist")
+  const [playlistTracks, setPlaylistTracks] = useState(mockPlaylist)
+
+  //handlers
+  const updatePlaylistName = useCallback((name) => {
+    setPlaylistName(name);
+  }, []);
 
   return (
     <div>
@@ -38,7 +66,13 @@ function App() {
         <p>here goes the search bar</p>
         <div className='App-playlist'>
           <SearchResults searchResults={searchResults} /*onAdd={addTrack}*//>
-          <p>here goes the play list</p>
+          <Playlist 
+          playlistName={playlistName}
+          playlistTracks={playlistTracks}
+          onNameChange={updatePlaylistName}
+          /*onRemove={removeTrack}
+          onSave={savePlaylist}*/
+          />
         </div>
       </div>
     </div>

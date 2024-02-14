@@ -31,23 +31,33 @@ const mockSearchResults = [
 const mockPlaylist = [
     {
         id: 4,
-        name: "Yūsha",
+        name: "勇者",
         artist: "Yoasobi",
         album: "THE BOOK",
+        uri:"spotify:track:0YTM7bCx451c6LQbkddy4Q"
       },
       {
         id: 5,
-        name: "Tabun",
+        name: "アイドル",
         artist: "Yoasobi",
         album: "THE BOOK",
+        uri:"spotify:track:7ovUcF5uHTBRzUpB6ZOmvt",
       },
       {
         id: 6,
-        name: "Ano Yume o Nazotte",
+        name: "夜にかける",
         artist: "Yoasobi",
         album: "THE BOOK",
+        uri:"spotify:track:3dPtXHP0oXQ4HCWHsOA9js"
       }
 ];
+
+const SpotifyPlaylistmock = [
+    {id:"7", artist: "YOASOBI", name:"アイドル", uri:"spotify:track:7ovUcF5uHTBRzUpB6ZOmvt"},
+    {id:"8", artist: "YOASOBI", name:"夜にかける", uri:"spotify:track:3dPtXHP0oXQ4HCWHsOA9js"},
+    {id:"9", artist: "YOASOBI", name:"勇者", uri:"spotify:track:0YTM7bCx451c6LQbkddy4Q"}
+    ]
+    
 
 function App() {
   const [searchResults, setSearchResults] = useState(mockSearchResults)
@@ -57,9 +67,9 @@ function App() {
   //handlers
   const addTrack = useCallback(
     (track) => {
-        if(playlistTracks.some((savedTrack) => savedTrack.id === track.id)) {
+        if (playlistTracks.some((savedTrack) => savedTrack.id === track.id)) 
             return;
-        };
+
         setPlaylistTracks((prevTracks) => [...prevTracks, track])
     }, [playlistTracks]
   );
@@ -74,6 +84,14 @@ function App() {
     setPlaylistName(name);
   }, []);
 
+  const savePlaylist = useCallback(() => {
+    const trackUris = playlistTracks.map((track) => track.uri);
+    Spotify.savePlaylist(playlistName, trackUris).then(() => {
+        setPlaylistName("New Playlist");
+        setPlaylistTracks([]);
+    });
+  }, [playlistName, playlistTracks]);
+
   return (
     <div>
       <h1>Ja<span className='highlight'>mmm</span>ing</h1>
@@ -86,7 +104,7 @@ function App() {
           playlistTracks={playlistTracks}
           onNameChange={updatePlaylistName}
           onRemove={removeTrack}
-          /*onSave={savePlaylist}*/
+          onSave={savePlaylist}
           />
         </div>
       </div>

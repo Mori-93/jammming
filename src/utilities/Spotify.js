@@ -22,9 +22,9 @@ const Spotify = {
         }
     },
 
-    //userId=jsonResponse.id returns the correct user id, but the following fetches return a 404
-    savePlaylist(playlistName, trackUris) {
-        if (!playlistName || !trackUris.length) {
+
+    savePlaylist(name, trackUris) {
+        if (!name || !trackUris.length) {
             return;
         }
 
@@ -36,10 +36,10 @@ const Spotify = {
         ).then(response => response.json()
         ).then(jsonResponse => {
             userId = jsonResponse.id;
-            return fetch(`https://api.spotify.com/vi/users/${userId}/playlists`, {
+            return fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
                 headers: headers,
                 method: 'POST',
-                body: JSON.stringify({name: playlistName})
+                body: JSON.stringify({name: name})
             }).then(response => response.json()
             ).then(jsonResponse => {
                 const playlistId = jsonResponse.id;

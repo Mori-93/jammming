@@ -8,6 +8,10 @@ const SearchBar = (props) => {
         setTerm(event.target.value);
     }, []);
 
+    const search = useCallback(() => {
+        props.onSearch(term);
+      }, [props.onSearch, term]);
+
     return (
         <div className="SearchBar">
             <input placeholder="Enter a Song Title" onChange={handletermChange} />

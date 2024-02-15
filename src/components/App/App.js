@@ -8,11 +8,10 @@ import Spotify from "../../utilities/Spotify";
 
 
 function App() {
-  const [searchResults, setSearchResults] = useState('')
+  const [searchResults, setSearchResults] = useState([])
   const [playlistName, setPlaylistName] = useState("New Playlist")
-  const [playlistTracks, setPlaylistTracks] = useState('')
+  const [playlistTracks, setPlaylistTracks] = useState([])
 
-  //handlers
   const search = useCallback((term) => {
     Spotify.search(term).then(setSearchResults)
   }, []);
